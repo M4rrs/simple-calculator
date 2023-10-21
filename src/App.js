@@ -5,10 +5,10 @@ function App() {
   return (
     <div className="calculator">
 		<div className="output">
-			<div className="prev-op"></div>
-			<div className="curr-op"></div>
+			<div className="prev-op">12345</div>
+			<div className="curr-op">12345</div>
 		</div>
-		<button className="span-two">AC</button>
+		<button className='button-2'>AC</button>
 		<button>DEL</button>
 		<button>+</button>
 		<button>1</button>
@@ -25,7 +25,7 @@ function App() {
 		<button>-</button>
 		<button>0</button>
 		<button>.</button>
-		<button>=</button>
+		<button className='button-2'>=</button>
 	</div>
   );
 }
