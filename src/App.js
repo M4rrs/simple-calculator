@@ -13,8 +13,8 @@ function App() {
 		<div className="wrap">
 			<div className="calculator">
 				<div class="output">
-					{/* <div className="prev-op"></div> */}
-					<input type="text" className="curr-op" value={state}></input>
+					<div className="prev-op">12312313132131231231313213123123123</div>
+					<textarea rows="1" value={state}></textarea>
 				</div>
 				<button className='button-2'>AC</button>
 				<button>DEL</button>
