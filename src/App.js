@@ -19,7 +19,9 @@ function App() {
 
 	const calculate = (e) => {
 		let result = Function('return ' + state)();
-		setResult(state.concat(result));
+
+		setResult("");
+		setResult(result);
 	}
 
 	return (
