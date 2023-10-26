@@ -1,12 +1,25 @@
 import logo from './logo.svg';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
 	const [state, setResult] = useState("");
+	const taSize = useRef(null);
+	
+	useEffect (() => {
+		taSize.current.style.height = "auto";
+		taSize.current.style.height = taSize.current.scrollHeight + "px";
+	}, [state]);
+	
+	const handleClick = (e) => { setResult(state.concat(e.target.name));}
 
-	const handleClick = (e) => {
-		setResult(state.concat(e.target.name));
+	const clear = (e) => { setResult(""); }
+
+	const backspace = (e) => { setResult(state.slice(0, -1)); }
+
+	const calculate = (e) => {
+		let result = Function('return ' + state)();
+		setResult(state.concat(result));
 	}
 
 	return (
@@ -14,10 +27,10 @@ function App() {
 			<div className="calculator">
 				<div class="output">
 					<div className="prev-op">12312313132131231231313213123123123</div>
-					<textarea rows="1" value={state}></textarea>
+					<textarea rows="1" value={state} ref={taSize}></textarea>
 				</div>
-				<button className='button-2'>AC</button>
-				<button>DEL</button>
+				<button className='button-2' onClick={clear}>AC</button>
+				<button onClick={backspace}>DEL</button>
 				<button name="/" onClick={handleClick}>/</button>
 				<button name="1" onClick={handleClick}>1</button>
 				<button name="2" onClick={handleClick}>2</button>
@@ -33,7 +46,7 @@ function App() {
 				<button name="-" onClick={handleClick}>-</button>
 				<button name="0" onClick={handleClick}>0</button>
 				<button name="." onClick={handleClick}>.</button>
-				<button className='button-2'>=</button>
+				<button className='button-2' onClick={calculate}>=</button>
 			</div>
 		</div>
 	);
