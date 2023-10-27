@@ -3,9 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
-	const initialState = "";
 	const [state, setResult] = useState("");
 	const taSize = useRef(null);
+	let prevState = "";
 	
 	useEffect (() => {
 		taSize.current.style.height = "auto";
@@ -61,7 +61,7 @@ function App() {
 		<div className="wrap">
 			<div className="calculator">
 				<div class="output">
-					<div className="prev-op"></div>
+					<div className="prev-op" value={prevState} ></div>
 					<textarea rows="1" value={state} ref={taSize}></textarea>
 				</div>
 				<button className='button-2' onClick={clear}>AC</button>
