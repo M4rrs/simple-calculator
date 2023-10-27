@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
+	const initialState = "";
 	const [state, setResult] = useState("");
 	const taSize = useRef(null);
 	
@@ -11,24 +12,56 @@ function App() {
 		taSize.current.style.height = taSize.current.scrollHeight + "px";
 	}, [state]);
 	
-	const handleClick = (e) => { setResult(state.concat(e.target.name));}
+	const handleClick = (e) => {
+		if (state === "Error") {
+			clear();
+			setResult(e.target.name);
+		}
+		else
+			setResult(state.concat(e.target.name));
+	}
 
 	const clear = (e) => { setResult(""); }
 
-	const backspace = (e) => { setResult(state.slice(0, -1)); }
+	const backspace = (e) => {
+		if (state === "Error")
+			clear();
+		else
+			setResult(state.slice(0, -1));
+	}
+
+	const hasDecimals = (num) => {
+		if (num - Math.floor(num) !== 0)
+			return true;
+		else
+			return false;
+	}
 
 	const calculate = (e) => {
-		let result = Function('return ' + state)();
+		let res = 0;
+		try {
+			let result = Function('return ' + state)();
+			res = result;
+			if (isNaN(res))
+				throw new Error("");
+		}
+		catch (err) {
+			setResult("Error");
+			return;
+		}
 
 		setResult("");
-		setResult(result);
+		if (hasDecimals(res)) {
+			res = res.toFixed(5);
+		}
+		setResult(res.toString());
 	}
 
 	return (
 		<div className="wrap">
 			<div className="calculator">
 				<div class="output">
-					<div className="prev-op">12312313132131231231313213123123123</div>
+					<div className="prev-op"></div>
 					<textarea rows="1" value={state} ref={taSize}></textarea>
 				</div>
 				<button className='button-2' onClick={clear}>AC</button>
