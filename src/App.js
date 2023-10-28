@@ -4,8 +4,8 @@ import './App.css';
 
 function App() {
 	const [state, setResult] = useState("");
+	const [prevState, setPrev] = useState("");
 	const taSize = useRef(null);
-	let prevState = "";
 	
 	useEffect (() => {
 		taSize.current.style.height = "auto";
@@ -21,7 +21,10 @@ function App() {
 			setResult(state.concat(e.target.name));
 	}
 
-	const clear = (e) => { setResult(""); }
+	const clear = (e) => {
+		setResult("");
+		setPrev("");
+	}
 
 	const backspace = (e) => {
 		if (state === "Error")
@@ -39,11 +42,15 @@ function App() {
 
 	const calculate = (e) => {
 		let res = 0;
+		const ops = /[-+*/]{2,}/;
 		try {
+			if (ops.test(state))
+				throw new Error("");
 			let result = Function('return ' + state)();
 			res = result;
 			if (isNaN(res))
 				throw new Error("");
+			setPrev(state);
 		}
 		catch (err) {
 			setResult("Error");
@@ -51,7 +58,7 @@ function App() {
 		}
 
 		setResult("");
-		if (hasDecimals(res)) {
+		if (hasDecimals(res) && res.toString().length > 5) {
 			res = res.toFixed(5);
 		}
 		setResult(res.toString());
@@ -61,7 +68,7 @@ function App() {
 		<div className="wrap">
 			<div className="calculator">
 				<div class="output">
-					<div className="prev-op" value={prevState} ></div>
+					<div className="prev-op">{prevState}</div>
 					<textarea rows="1" value={state} ref={taSize}></textarea>
 				</div>
 				<button className='button-2' onClick={clear}>AC</button>

@@ -40,11 +40,11 @@ body {
 .output {
 	background-color: rgba(0, 0, 0, .5);
 	border-radius: 10px;
-	padding: 0.5rem;
+	padding: 1rem;
 	grid-column: 1 / -1;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
+	align-items: flex-start;
 	justify-content: space-between;
 	position: relative;
 	word-wrap: break-word;
@@ -54,6 +54,7 @@ body {
 .prev-op {
 	color: rgba(255, 255, 255, .5);
 	font-size: 1rem;
+	text-align: left;
 }
 
 textarea {
@@ -65,7 +66,6 @@ textarea {
 	height: 100%;
 	resize: none;
 	max-height: 100%;
-	text-align: right;
 }
 
 textarea:focus {
